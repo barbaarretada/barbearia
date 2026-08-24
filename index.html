@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barba Arretada — Barbearia</title>
+<meta name="description" content="Barba Arretada — barbearia de bairro. Corte, barba e navalha do jeito que se faz de verdade.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rye&family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0c0b09;
+    --ink-2:#151310;
+    --card:#1b1712;
+    --cream:#ede4cf;
+    --cream-dim:#c9bd9f;
+    --brass:#c39a48;
+    --brass-dim:#8a6c34;
+    --oxblood:#7c2c28;
+    --line: rgba(237,228,207,.14);
+    --line-strong: rgba(237,228,207,.28);
+    --maxw: 1180px;
+    --radius: 2px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--cream);
+    font-family:'Jost', sans-serif;
+    font-weight:400;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%; display:block;}
+  a{color:inherit; text-decoration:none;}
+  ::selection{background:var(--brass); color:var(--ink);}
+
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
+
+  h1,h2,h3, .display{
+    font-family:'Rye', serif;
+    font-weight:400;
+    letter-spacing:.01em;
+    line-height:1.15;
+    color:var(--cream);
+  }
+  .eyebrow{
+    font-family:'Jost', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.28em;
+    font-size:12px;
+    color:var(--brass);
+    font-weight:600;
+  }
+  .lede{
+    color:var(--cream-dim);
+    font-size:17px;
+    max-width:52ch;
+  }
+
+  /* ---------- decorative svg motifs ---------- */
+  .arch-badge{width:120px; height:auto; margin:0 auto; display:block;}
+  .arch-badge path, .arch-badge circle{vector-effect:non-scaling-stroke;}
+  .divider-razors{display:flex; align-items:center; justify-content:center; gap:18px; margin:0 auto;}
+  .divider-razors .rule{height:1px; width:64px; background:var(--line-strong);}
+  .divider-razors svg{width:34px; height:34px; flex-shrink:0;}
+
+  /* ---------- header / nav ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(12,11,9,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-row{
+    display:flex; align-items:center; justify-content:space-between;
+    height:76px;
+  }
+  .brandmark{display:flex; align-items:center; gap:12px;}
+  .brandmark img{height:44px; width:auto;}
+  .brandmark span{font-family:'Rye',serif; font-size:19px; letter-spacing:.02em;}
+  nav.links{display:flex; align-items:center; gap:32px;}
+  nav.links a{
+    font-size:13px; text-transform:uppercase; letter-spacing:.14em;
+    color:var(--cream-dim); font-weight:500;
+    position:relative; padding:4px 0;
+    transition:color .2s ease;
+  }
+  nav.links a:hover{color:var(--cream);}
+  nav.links a::after{
+    content:''; position:absolute; left:0; bottom:-2px; height:1px; width:0%;
+    background:var(--brass); transition:width .25s ease;
+  }
+  nav.links a:hover::after{width:100%;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--brass); color:var(--ink);
+    font-weight:600; font-size:13px; text-transform:uppercase; letter-spacing:.1em;
+    padding:12px 22px; border-radius:var(--radius);
+    border:1px solid var(--brass);
+    transition:background .2s ease, color .2s ease, transform .2s ease;
+    white-space:nowrap;
+  }
+  .btn:hover{background:transparent; color:var(--brass); transform:translateY(-1px);}
+  .btn-outline{
+    background:transparent; color:var(--cream); border:1px solid var(--line-strong);
+  }
+  .btn-outline:hover{border-color:var(--brass); color:var(--brass); background:transparent;}
+  .menu-toggle{display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:8px;}
+  .menu-toggle span{width:24px; height:2px; background:var(--cream);}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    min-height:92vh;
+    display:flex; align-items:center;
+    overflow:hidden;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-bg{
+    position:absolute; inset:0;
+    background-image:url('assets/img/barber-01.jpg');
+    background-size:cover;
+    background-position:52% 22%;
+    filter:grayscale(35%) contrast(1.08);
+  }
+  .hero-bg::after{content:'';}
+  .hero-scrim{
+    position:absolute; inset:0;
+    background:
+      linear-gradient(90deg, rgba(12,11,9,.96) 0%, rgba(12,11,9,.88) 32%, rgba(12,11,9,.55) 58%, rgba(12,11,9,.25) 100%),
+      linear-gradient(0deg, rgba(12,11,9,.7) 0%, rgba(12,11,9,0) 30%);
+  }
+  .hero-content{position:relative; z-index:2; padding:120px 0 90px;}
+  .hero-content .eyebrow{margin-bottom:18px;}
+  .hero-content h1{
+    font-size:clamp(52px, 9vw, 104px);
+    max-width:11ch;
+  }
+  .hero-content .lede{margin:24px 0 34px; font-size:18px;}
+  .hero-cta{display:flex; gap:16px; flex-wrap:wrap;}
+  .hero-stars{margin-top:56px; display:flex; align-items:center; gap:14px; color:var(--cream-dim); font-size:13px; letter-spacing:.08em; text-transform:uppercase;}
+  .hero-stars svg{width:16px; height:16px;}
+
+  /* ---------- sections generic ---------- */
+  section{padding:110px 0;}
+  section.tight{padding:90px 0;}
+  .section-head{text-align:center; max-width:640px; margin:0 auto 64px;}
+  .section-head .eyebrow{display:block; margin-bottom:14px;}
+  .section-head h2{font-size:clamp(34px,4.5vw,48px); margin-bottom:18px;}
+  .section-head .lede{margin:0 auto;}
+
+  /* ---------- quem somos ---------- */
+  #quem-somos{background:var(--ink-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .qs-grid{display:grid; grid-template-columns:.95fr 1.05fr; gap:70px; align-items:center;}
+  .qs-photo{position:relative;}
+  .qs-photo img{
+    width:100%; aspect-ratio:4/5; object-fit:cover;
+    filter:grayscale(20%) contrast(1.05);
+    border:1px solid var(--line-strong);
+  }
+  .qs-photo .frame-tag{
+    position:absolute; bottom:-1px; left:-1px;
+    background:var(--brass); color:var(--ink);
+    font-size:11px; letter-spacing:.14em; text-transform:uppercase; font-weight:600;
+    padding:8px 14px;
+  }
+  .qs-text .eyebrow{margin-bottom:16px;}
+  .qs-text h2{font-size:clamp(30px,4vw,42px); margin-bottom:22px;}
+  .qs-text p{color:var(--cream-dim); margin-bottom:16px; max-width:56ch;}
+  .qs-list{margin-top:30px; display:grid; gap:16px;}
+  .qs-list li{display:flex; align-items:flex-start; gap:14px; list-style:none; color:var(--cream);}
+  .qs-list svg{width:20px; height:20px; flex-shrink:0; margin-top:3px; color:var(--brass);}
+  .qs-list b{font-weight:600;}
+  .qs-list small{display:block; color:var(--cream-dim); font-weight:400;}
+
+  /* ---------- cortes / price board ---------- */
+  #cortes{background:var(--ink);}
+  .board{
+    border:1px solid var(--line-strong);
+    background:var(--card);
+    padding:8px;
+  }
+  .board-inner{border:1px solid var(--line); padding:52px 40px;}
+  .price-grid{display:grid; grid-template-columns:1fr 1fr; gap:0 60px;}
+  .price-item{
+    display:flex; align-items:baseline; gap:10px;
+    padding:18px 0;
+    border-bottom:1px dashed var(--line-strong);
+  }
+  .price-item .name{font-family:'Rye',serif; font-size:19px; white-space:nowrap;}
+  .price-item .name small{display:block; font-family:'Jost',sans-serif; font-size:12px; color:var(--cream-dim); letter-spacing:.02em; margin-top:4px; font-weight:400; white-space:normal;}
+  .price-item .fill{flex:1; border-bottom:1px dotted var(--line-strong); transform:translateY(-6px);}
+  .price-item .price{font-family:'Rye',serif; font-size:19px; color:var(--brass); white-space:nowrap;}
+  .price-note{
+    text-align:center; margin-top:40px; font-size:13px; color:var(--cream-dim);
+    letter-spacing:.04em;
+  }
+
+  /* ---------- opiniões ---------- */
+  #opinioes{background:var(--ink-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .testi-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:28px;}
+  .testi-card{
+    background:var(--card); border:1px solid var(--line);
+    padding:34px 30px;
+    display:flex; flex-direction:column; gap:20px;
+  }
+  .testi-stars{display:flex; gap:5px; color:var(--brass);}
+  .testi-stars svg{width:15px; height:15px;}
+  .testi-card p{color:var(--cream); font-style:italic; font-size:15.5px; line-height:1.7;}
+  .testi-who{display:flex; align-items:center; gap:12px; margin-top:auto;}
+  .testi-avatar{
+    width:38px; height:38px; border-radius:50%;
+    background:var(--ink-2); border:1px solid var(--brass-dim);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Rye',serif; font-size:14px; color:var(--brass);
+  }
+  .testi-who .name{font-size:14px; font-weight:600;}
+  .testi-who .role{font-size:12px; color:var(--cream-dim);}
+
+  /* ---------- estrutura / galeria ---------- */
+  #estrutura{background:var(--ink);}
+  .gallery{
+    display:grid;
+    grid-template-columns:repeat(6, 1fr);
+    grid-auto-rows:150px;
+    gap:12px;
+  }
+  .gallery a{
+    position:relative; overflow:hidden;
+    border:1px solid var(--line);
+  }
+  .gallery img{
+    width:100%; height:100%; object-fit:cover;
+    filter:grayscale(15%) contrast(1.05);
+    transition:transform .5s ease, filter .5s ease;
+  }
+  .gallery a:hover img{transform:scale(1.06); filter:grayscale(0%) contrast(1.05);}
+  .gallery a::before{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(0deg, rgba(12,11,9,.55), transparent 45%);
+    z-index:1; pointer-events:none;
+  }
+  .g1{grid-column:span 2; grid-row:span 2;}
+  .g2{grid-column:span 2; grid-row:span 3;}
+  .g3{grid-column:span 2; grid-row:span 2;}
+  .g4{grid-column:span 2; grid-row:span 1;}
+  .g5{grid-column:span 2; grid-row:span 2;}
+  .g6{grid-column:span 2; grid-row:span 1;}
+
+  /* ---------- contato ---------- */
+  #contato{
+    background:var(--ink-2); border-top:1px solid var(--line);
+    padding:100px 0 60px;
+  }
+  .contato-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:70px;}
+  .contato-info h2{font-size:clamp(30px,4vw,42px); margin-bottom:20px;}
+  .contato-info p{color:var(--cream-dim); max-width:50ch; margin-bottom:34px;}
+  .info-rows{display:grid; gap:22px; margin-bottom:38px;}
+  .info-row{display:flex; gap:16px; align-items:flex-start;}
+  .info-row svg{width:20px; height:20px; color:var(--brass); flex-shrink:0; margin-top:3px;}
+  .info-row .label{font-size:12px; text-transform:uppercase; letter-spacing:.12em; color:var(--cream-dim); margin-bottom:3px;}
+  .info-row .value{font-size:15.5px;}
+  .social-row{display:flex; gap:14px;}
+  .social-row a{
+    width:42px; height:42px; border:1px solid var(--line-strong);
+    display:flex; align-items:center; justify-content:center;
+    transition:border-color .2s ease, color .2s ease;
+  }
+  .social-row a:hover{border-color:var(--brass); color:var(--brass);}
+  .social-row svg{width:18px; height:18px;}
+
+  .hours-card{background:var(--card); border:1px solid var(--line); padding:36px;}
+  .hours-card .eyebrow{margin-bottom:18px;}
+  .hours-row{display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid var(--line); font-size:14.5px;}
+  .hours-row:last-child{border-bottom:none;}
+  .hours-row .day{color:var(--cream-dim);}
+  .hours-row .time{font-weight:500;}
+  .hours-card .btn{width:100%; justify-content:center; margin-top:26px;}
+
+  footer{border-top:1px solid var(--line); padding:32px 0;}
+  .footer-row{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;}
+  .footer-row .brandmark img{height:30px;}
+  .footer-row p{font-size:12.5px; color:var(--cream-dim);}
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 920px){
+    nav.links{
+      position:fixed; inset:76px 0 0 0; background:var(--ink);
+      flex-direction:column; align-items:flex-start; padding:40px 28px; gap:26px;
+      transform:translateX(100%); transition:transform .3s ease; z-index:40;
+      border-top:1px solid var(--line);
+    }
+    nav.links.open{transform:translateX(0);}
+    nav.links a{font-size:16px;}
+    .menu-toggle{display:flex;}
+    .nav-cta{display:none;}
+    .qs-grid, .contato-grid{grid-template-columns:1fr; gap:44px;}
+    .price-grid{grid-template-columns:1fr;}
+    .testi-grid{grid-template-columns:1fr;}
+    .gallery{grid-template-columns:repeat(2,1fr); grid-auto-rows:200px;}
+    .g1,.g2,.g3,.g4,.g5,.g6{grid-column:span 1; grid-row:span 1;}
+  }
+  @media (max-width: 560px){
+    section{padding:76px 0;}
+    .wrap{padding:0 20px;}
+    .hero-content h1{max-width:9ch;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav-row">
+    <a href="#home" class="brandmark">
+      <img src="assets/img/logo.jpg" alt="Barba Arretada">
+    </a>
+    <nav class="links" id="navLinks">
+      <a href="#home">Home</a>
+      <a href="#quem-somos">Quem somos</a>
+      <a href="#cortes">Cortes</a>
+      <a href="#estrutura">Estrutura</a>
+      <a href="#opinioes">Opiniões</a>
+      <a href="#contato">Contato</a>
+      <a href="https://wa.me/5500000000000" class="btn" target="_blank" rel="noopener">Agendar</a>
+    </nav>
+    <a href="https://wa.me/5500000000000" class="btn nav-cta" target="_blank" rel="noopener">Agendar horário</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-scrim"></div>
+  <div class="wrap hero-content">
+    <span class="eyebrow">Barbearia · Corte &amp; Barba</span>
+    <h1>Barba<br>Arretada</h1>
+    <p class="lede">Navalha na régua, toalha quente e papo reto — do jeito que se faz de verdade. Aqui é ofício, não é pressa.</p>
+    <div class="hero-cta">
+      <a href="https://wa.me/5500000000000" class="btn" target="_blank" rel="noopener">Agendar no WhatsApp</a>
+      <a href="#cortes" class="btn btn-outline">Ver cortes e valores</a>
+    </div>
+    <div class="hero-stars">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.6 6.9L22 9.3l-5.5 4.6L18.2 21 12 17l-6.2 4 1.7-7.1L2 9.3l7.4-.4z"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.6 6.9L22 9.3l-5.5 4.6L18.2 21 12 17l-6.2 4 1.7-7.1L2 9.3l7.4-.4z"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.6 6.9L22 9.3l-5.5 4.6L18.2 21 12 17l-6.2 4 1.7-7.1L2 9.3l7.4-.4z"/></svg>
+      Clientes que viram a diferença no espelho
+    </div>
+  </div>
+</section>
+
+<section id="quem-somos">
+  <div class="wrap qs-grid">
+    <div class="qs-photo">
+      <img src="assets/img/barber-05.jpg" alt="Barbeiro finalizando um corte na Barba Arretada">
+      <span class="frame-tag">Na régua, todo dia</span>
+    </div>
+    <div class="qs-text">
+      <span class="eyebrow">Quem somos</span>
+      <h2>Mão de barbeiro de verdade</h2>
+      <p>A Barba Arretada nasceu do jeito que barbearia boa sempre nasce: navalha afiada, toalha quente e um time que gosta do que faz. Cada corte é feito com calma — sem pressa pra terminar rápido, com pressa só de fazer bonito.</p>
+      <p>Aqui você senta, conversa, relaxa — e sai com o corte na régua e a barba no ponto certo.</p>
+      <ul class="qs-list">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4l16 16M20 4L4 20"/></svg>
+          <div><b>Navalha e toalha quente</b><small>Barba feita no método clássico, sem atalho</small></div>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <div><b>Sem correria</b><small>Cada cliente tem o tempo que o corte precisar</small></div>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-4.35-9.5-8.5C.5 8.5 3 5 6.5 5c2 0 3.5 1.2 4.5 2.5C12 6.2 13.5 5 15.5 5 19 5 21.5 8.5 21.5 12.5 19 16.65 12 21 12 21z"/></svg>
+          <div><b>Cliente fiel se cuida</b><small>Ambiente pra virar rotina, não visita única</small></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="cortes">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Serviços</span>
+      <h2>Cortes &amp; valores</h2>
+      <p class="lede">Cardápio de barbearia, do jeito antigo — sem letra miúda.</p>
+    </div>
+    <div class="board">
+      <div class="board-inner">
+        <div class="price-grid">
+          <div class="price-item"><span class="name">Corte<small>Máquina, tesoura ou os dois</small></span><span class="fill"></span><span class="price">R$ 40</span></div>
+          <div class="price-item"><span class="name">Barba<small>Navalha e toalha quente</small></span><span class="fill"></span><span class="price">R$ 35</span></div>
+          <div class="price-item"><span class="name">Corte + Barba<small>O combo clássico</small></span><span class="fill"></span><span class="price">R$ 65</span></div>
+          <div class="price-item"><span class="name">Sobrancelha<small>Na navalha</small></span><span class="fill"></span><span class="price">R$ 15</span></div>
+          <div class="price-item"><span class="name">Pézinho<small>Acabamento entre cortes</small></span><span class="fill"></span><span class="price">R$ 15</span></div>
+          <div class="price-item"><span class="name">Relaxamento<small>Alisamento capilar</small></span><span class="fill"></span><span class="price">R$ 50</span></div>
+          <div class="price-item"><span class="name">Corte infantil<small>Até 12 anos</small></span><span class="fill"></span><span class="price">R$ 35</span></div>
+          <div class="price-item"><span class="name">Combo completo<small>Corte + barba + sobrancelha</small></span><span class="fill"></span><span class="price">R$ 75</span></div>
+        </div>
+        <p class="price-note">Valores de exemplo — atualize com a tabela real da Barba Arretada.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="opinioes">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Opinião dos clientes</span>
+      <h2>Quem senta, aprova</h2>
+      <p class="lede">Depoimentos de exemplo — troque pelos comentários reais dos seus clientes.</p>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.6 6.9L22 9.3l-5.5 4.6L18.2 21 12 17l-6.2 4 1.7-7.1L2 9.3l7.4-.4z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.6 6.9L22 9.3l-5.5 4.6L18.2 21 12 17l-6.2 4 1.7-7.1L2 9.3l7.4-.4z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.6 6.9L22 9.3l-5.5 4.6L18.2 21 12 17l-6.2 4 1.7-7.1L2 9.3l7.4-.4z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.6 6.9L22 9.3l-5.5 4.6L18.2 21 12 17l-6.2 4 1.7-7.1L2 9.3l7.4-.4z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.6 6.9L22 9.3l-5.5 4.6L18.2 21 12 17l-6.2 4 1.7-7.1L2 9.3l7.4-.4z"/></svg>
+        </div>
+        <p>"Corte na régua e a barba ficou perfeita. Ambiente gente boa, sem enrolação."</p>
+        <div class="testi-who">
+          <div class="testi-avatar">JP</div>
+          <div><div class="name">João Pedro</div><div class="role">Cliente fixo</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.6 6.9L22 9.3l-5.5 4.6L18.2 21 12 17l-6.2 4 1.7-7.1L2 9.3l7.4-.4z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.6 6.9L22 9.3l-5.5 4.6L18.2 21 12 17l-6.2 4 1.7-7.1L2 9.3l7.4-.4z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.6 6.9L22 9.3l-5.5 4.6L18.2 21 12 17l-6.2 4 1.7-7.1L2 9.3l7.4-.4z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.6 6.9L22 9.3l-5.5 4.6L18.2 21 12 17l-6.2 4 1.7-7.1L2 9.3l7.4-.4z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.6 6.9L22 9.3l-5.5 4.6L18.2 21 12 17l-6.2 4 1.7-7.1L2 9.3l7.4-.4z"/></svg>
+        </div>
+        <p>"Virei cliente fixo depois da primeira vez. Toalha quente é diferencial mesmo."</p>
+        <div class="testi-who">
+          <div class="testi-avatar">RM</div>
+          <div><div class="name">Rafael Melo</div><div class="role">Cliente fixo</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.6 6.9L22 9.3l-5.5 4.6L18.2 21 12 17l-6.2 4 1.7-7.1L2 9.3l7.4-.4z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.6 6.9L22 9.3l-5.5 4.6L18.2 21 12 17l-6.2 4 1.7-7.1L2 9.3l7.4-.4z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.6 6.9L22 9.3l-5.5 4.6L18.2 21 12 17l-6.2 4 1.7-7.1L2 9.3l7.4-.4z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.6 6.9L22 9.3l-5.5 4.6L18.2 21 12 17l-6.2 4 1.7-7.1L2 9.3l7.4-.4z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.6 6.9L22 9.3l-5.5 4.6L18.2 21 12 17l-6.2 4 1.7-7.1L2 9.3l7.4-.4z"/></svg>
+        </div>
+        <p>"Levei meu filho pra cortar o cabelo e o barbeiro teve uma paciência incrível."</p>
+        <div class="testi-who">
+          <div class="testi-avatar">DA</div>
+          <div><div class="name">Diego Alves</div><div class="role">Cliente fixo</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="estrutura">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Estrutura</span>
+      <h2>Por dentro da barbearia</h2>
+      <p class="lede">O dia a dia da Barba Arretada — cadeira, navalha e mão na massa.</p>
+    </div>
+    <div class="gallery">
+      <a class="g1" href="assets/img/barber-01.jpg" target="_blank" rel="noopener"><img src="assets/img/barber-01.jpg" alt="Barbeiro finalizando a barba com toalha quente"></a>
+      <a class="g2" href="assets/img/barber-04.jpg" target="_blank" rel="noopener"><img src="assets/img/barber-04.jpg" alt="Barbeiro secando a barba do cliente"></a>
+      <a class="g3" href="assets/img/shop-01.jpg" target="_blank" rel="noopener"><img src="assets/img/shop-01.jpg" alt="Estrutura interna da barbearia"></a>
+      <a class="g4" href="assets/img/barber-02.jpg" target="_blank" rel="noopener"><img src="assets/img/barber-02.jpg" alt="Toalha quente na barba do cliente"></a>
+      <a class="g5" href="assets/img/barber-03.jpg" target="_blank" rel="noopener"><img src="assets/img/barber-03.jpg" alt="Ajuste fino da barba"></a>
+      <a class="g6" href="assets/img/barber-01.jpg" target="_blank" rel="noopener"><img src="assets/img/barber-01.jpg" alt="Rotina da barbearia"></a>
+    </div>
+  </div>
+</section>
+
+<section id="contato">
+  <div class="wrap contato-grid">
+    <div class="contato-info">
+      <span class="eyebrow">Contato</span>
+      <h2>Vem cortar com a gente</h2>
+      <p>Marque pelo WhatsApp ou passe direto na barbearia. Endereço, telefone e redes abaixo são de exemplo — troque pelos dados reais da Barba Arretada.</p>
+      <div class="info-rows">
+        <div class="info-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0112 3.5a6.5 6.5 0 016.5 6.5c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>
+          <div><div class="label">Endereço</div><div class="value">Rua Exemplo, 123 — Bairro, Cidade/UF</div></div>
+        </div>
+        <div class="info-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5h4l2 5-2.5 1.5a11 11 0 005 5L14 14l5 2v4a2 2 0 01-2 2C9.4 22 2 14.6 2 7a2 2 0 012-2z"/></svg>
+          <div><div class="label">WhatsApp</div><div class="value">(00) 00000-0000</div></div>
+        </div>
+        <div class="info-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 7l9 6 9-6"/></svg>
+          <div><div class="label">E-mail</div><div class="value">contato@barbaarretada.com.br</div></div>
+        </div>
+      </div>
+      <div class="social-row">
+        <a href="#" aria-label="Instagram" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+        </a>
+        <a href="https://wa.me/5500000000000" aria-label="WhatsApp" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5h4l2 5-2.5 1.5a11 11 0 005 5L14 14l5 2v4a2 2 0 01-2 2C9.4 22 2 14.6 2 7a2 2 0 012-2z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="hours-card">
+      <span class="eyebrow">Horário</span>
+      <div class="hours-row"><span class="day">Segunda</span><span class="time">Fechado</span></div>
+      <div class="hours-row"><span class="day">Terça — Sexta</span><span class="time">9h às 19h</span></div>
+      <div class="hours-row"><span class="day">Sábado</span><span class="time">8h às 18h</span></div>
+      <div class="hours-row"><span class="day">Domingo</span><span class="time">Fechado</span></div>
+      <a href="https://wa.me/5500000000000" class="btn" target="_blank" rel="noopener">Agendar meu horário</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-row">
+    <a href="#home" class="brandmark"><img src="assets/img/logo.jpg" alt="Barba Arretada"></a>
+    <p>© 2026 Barba Arretada. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<script>
+  const toggle = document.getElementById('menuToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+</script>
+
+</body>
+</html>
